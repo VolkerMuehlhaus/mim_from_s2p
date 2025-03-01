@@ -18,6 +18,15 @@ args = parser.parse_args()
 # input data, must be 2-port S2P data
 sub = rf.Network(args.s2p)
 
+# if the input data has DC point, remove that because it will throw warnungs later
+if sub.frequency.start == 0:
+    # resample to start at 1 GHz (or closest value)
+    newrange = '1-' + str(sub.frequency.stop/1e9) + 'ghz'
+    print(newrange)
+    sub = sub[newrange]
+
+
+
 # target frequency for pi model extraction
 f_target = args.f_ghz*1e9
 
