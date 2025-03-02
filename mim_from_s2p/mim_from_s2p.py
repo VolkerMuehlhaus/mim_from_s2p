@@ -22,9 +22,7 @@ sub = rf.Network(args.s2p)
 if sub.frequency.start == 0:
     # resample to start at 1 GHz (or closest value)
     newrange = '1-' + str(sub.frequency.stop/1e9) + 'ghz'
-    print(newrange)
     sub = sub[newrange]
-
 
 
 # target frequency for pi model extraction
@@ -68,17 +66,17 @@ Cser_low =  Cser[flow_index]       # low frequency value, where Lseries has very
 
 print(f"Choosing  {f[flow_index]/1e9:.1f} GHz for low frequency data")  
 print('_________________________________________________________')
-print(f"Series C extracted at low frequency: : {Cser_low*1e15:.3f} fF")  
+print(f"Series C extracted at low frequency: {Cser_low*1e15:.3f} fF")  
 # print(f"Series C extracted at {f[ftarget_index]/1e9:.1f} GHz: : {Cser_target*1e15:.3f} fF")  
 
 # calculate series L
 Lser = (Zseries.imag + 1 / (omega*Cser_low))/omega
 Lser_target = Lser[ftarget_index]
-print(f"Series L extracted at {f[ftarget_index]/1e9:.1f} GHz: : {Lser_target*1e12:.3f} pH")  
+print(f"Series L extracted at {f[ftarget_index]/1e9:.1f} GHz: {Lser_target*1e12:.3f} pH")  
 
 # calculate series R
 Rser_target = Zseries.real[ftarget_index]
-print(f"Series R extracted at {f[ftarget_index]/1e9:.1f} GHz: : {Rser_target:.3f} Ohm")  
+print(f"Series R extracted at {f[ftarget_index]/1e9:.1f} GHz: {Rser_target:.3f} Ohm")  
 
 
 # check  effective series impedance from calculated L and C
@@ -94,7 +92,7 @@ Cshunt2 = -1 / (omega*Zshunt2.imag)
 # because they are connected tightly by the large MIM value anyway
 Cshunt_target = (Cshunt1[ftarget_index] + Cshunt2[ftarget_index])/2
 
-print(f"Shunt C distributed to both ports:  : {Cshunt_target*1e15:.3f} fF each side")  
+print(f"Shunt C distributed to both ports:  {Cshunt_target*1e15:.3f} fF each side")  
 print('_________________________________________________________')
 
 
